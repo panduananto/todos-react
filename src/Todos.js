@@ -1,11 +1,17 @@
 import React from "react";
 
-const Todos = ({ todos }) => {
+const Todos = ({ todos, deleteTodo }) => {
   const todosList = todos.length ? (
     todos.map((todo) => {
       return (
         <div className="todo-item collection-item" key={todo.id}>
-          <p>{todo.content}</p>
+          <span
+            onClick={() => {
+              deleteTodo(todo.id);
+            }}
+          >
+            {todo.content}
+          </span>
         </div>
       );
     })
