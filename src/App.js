@@ -1,11 +1,12 @@
 import React, { Component } from "react";
+import Todos from "./Todos";
 
 class App extends Component {
   state = {
     todos: [
       {
         id: 1,
-        content: "learn reinforcement learning",
+        content: "study MDP",
       },
       {
         id: 2,
@@ -14,7 +15,12 @@ class App extends Component {
     ],
   };
   render() {
-    return <div className="App"></div>;
+    return (
+      <div className="App">
+        <h1 className="center blue-text">Todo</h1>
+        <Todos todos={this.state.todos}/>
+      </div>
+    );
   }
 }
 
