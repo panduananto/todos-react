@@ -5,13 +5,13 @@ const Todos = ({ todos, deleteTodo }) => {
     todos.map((todo) => {
       return (
         <div className="todo-item collection-item" key={todo.id}>
-          <span
+          <div
             onClick={() => {
               deleteTodo(todo.id);
             }}
           >
             {todo.content}
-          </span>
+          </div>
         </div>
       );
     })
