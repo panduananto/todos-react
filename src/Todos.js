@@ -1,16 +1,27 @@
 import React from "react";
 
-const Todos = ({ todos, deleteTodo }) => {
+const Todos = ({ todos, completeTodo, deleteTodo }) => {
   const todosList = todos.length ? (
     todos.map((todo) => {
       return (
         <div className="todo-item collection-item" key={todo.id}>
           <div
+            style={{ textDecoration: todo.complete ? "line-through" : "" }}
             onClick={() => {
-              deleteTodo(todo.id);
+              completeTodo(todo.id);
             }}
           >
             {todo.content}
+          </div>
+          <div className="button-group secondary-content">
+            <div
+              className="waves-effect waves-light btn red lighten-1"
+              onClick={() => {
+                deleteTodo(todo.id);
+              }}
+            >
+              <i className="material-icons">delete</i>
+            </div>
           </div>
         </div>
       );

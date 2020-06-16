@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import Todos from "./Todos";
-import AddTodo from "./AddTodo";
+import FormTodo from "./FormTodo";
 
 class App extends Component {
   state = {
@@ -8,12 +8,32 @@ class App extends Component {
       {
         id: 1,
         content: "study MDP",
+        complete: false,
       },
       {
         id: 2,
         content: "play dota2",
+        complete: false,
       },
     ],
+  };
+
+  completeTodo = (id) => {
+    const todos = this.state.todos.map((todo) => {
+      if (todo.id === id) {
+        return {
+          id: todo.id,
+          content: todo.content,
+          complete: !todo.complete,
+        };
+      } else {
+        return todo;
+      }
+    });
+
+    this.setState({
+      todos: todos,
+    });
   };
 
   deleteTodo = (id) => {
@@ -38,8 +58,12 @@ class App extends Component {
     return (
       <div className="todo-app container">
         <h1 className="center blue-text">Todo</h1>
-        <Todos todos={this.state.todos} deleteTodo={this.deleteTodo} />
-        <AddTodo addTodo={this.addTodo} />
+        <Todos
+          todos={this.state.todos}
+          completeTodo={this.completeTodo}
+          deleteTodo={this.deleteTodo}
+        />
+        <FormTodo addTodo={this.addTodo} />
       </div>
     );
   }

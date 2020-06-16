@@ -1,8 +1,9 @@
 import React, { Component } from "react";
 
-class AddTodo extends Component {
+class FormTodo extends Component {
   state = {
     content: "",
+    complete: false,
   };
 
   handleChange = (e) => {
@@ -34,4 +35,4 @@ class AddTodo extends Component {
   }
 }
 
-export default AddTodo;
+export default FormTodo;
