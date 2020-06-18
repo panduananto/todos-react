@@ -1,6 +1,6 @@
 import React from "react";
 
-const Todos = ({ todos, completeTodo, deleteTodo }) => {
+const Todos = ({ todos, editTodo, completeTodo, deleteTodo }) => {
   const todosList = todos.length ? (
     todos.map((todo) => {
       return (
@@ -14,6 +14,14 @@ const Todos = ({ todos, completeTodo, deleteTodo }) => {
             {todo.content}
           </div>
           <div className="button-group secondary-content">
+            <div
+              className="waves-effect waves-light btn blue lighten-1"
+              onClick={() => {
+                editTodo(todo.id);
+              }}
+            >
+              <i className="material-icons">edit</i>
+            </div>
             <div
               className="waves-effect waves-light btn red lighten-1"
               onClick={() => {

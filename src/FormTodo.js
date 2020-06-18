@@ -6,6 +6,14 @@ class FormTodo extends Component {
     complete: false,
   };
 
+  componentDidUpdate(prevProps) {
+    if (this.props.editTodo.content !== prevProps.editTodo.content) {
+      this.setState({
+        content: this.props.editTodo.content || "",
+      });
+    }
+  }
+
   handleChange = (e) => {
     this.setState({
       content: e.target.value,
@@ -14,7 +22,12 @@ class FormTodo extends Component {
 
   handleSubmit = (e) => {
     e.preventDefault();
-    this.props.addTodo(this.state);
+    let newTodoInput = e.target.querySelector("input").value;
+    if (this.props.isEditing) {
+      this.props.addTodo(newTodoInput, this.props.editTodo.id);
+    } else {
+      this.props.addTodo(this.state, "");
+    }
     this.setState({
       content: "",
     });
@@ -27,7 +40,7 @@ class FormTodo extends Component {
           <input
             type="text"
             onChange={this.handleChange}
-            value={this.state.content}
+            value={this.state.content || ""}
           ></input>
         </form>
       </div>

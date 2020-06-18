@@ -16,6 +16,18 @@ class App extends Component {
         complete: false,
       },
     ],
+    isEditing: false,
+    editTodo: {},
+  };
+
+  editTodo = (id) => {
+    const todoSelected = this.state.todos.find((todo) => {
+      return todo.id === id;
+    });
+    this.setState({
+      isEditing: true,
+      editTodo: todoSelected,
+    });
   };
 
   completeTodo = (id) => {
@@ -30,7 +42,6 @@ class App extends Component {
         return todo;
       }
     });
-
     this.setState({
       todos: todos,
     });
@@ -40,18 +51,36 @@ class App extends Component {
     const todos = this.state.todos.filter((todo) => {
       return todo.id !== id;
     });
-
     this.setState({
       todos: todos,
     });
   };
 
-  addTodo = (todo) => {
-    todo.id = this.state.todos[this.state.todos.length - 1].id + 1;
-    let todos = [...this.state.todos, todo];
-    this.setState({
-      todos: todos,
-    });
+  addTodo = (todoNew, idEdited) => {
+    if (idEdited) {
+      const newTodo = this.state.todos.find((todo) => {
+        return todo.id === idEdited;
+      });
+
+      newTodo.content = todoNew;
+
+      const index = this.state.todos.findIndex((todo) => {
+        return todo.id === idEdited;
+      });
+
+      this.state.todos.splice(index, 1, newTodo);
+      this.setState({
+        todos: this.state.todos,
+        isEditing: false,
+        editTodo: {},
+      });
+    } else {
+      todoNew.id = this.state.todos[this.state.todos.length - 1].id + 1;
+      let todos = [...this.state.todos, todoNew];
+      this.setState({
+        todos: todos,
+      });
+    }
   };
 
   render() {
@@ -60,10 +89,15 @@ class App extends Component {
         <h1 className="center blue-text">Todo</h1>
         <Todos
           todos={this.state.todos}
+          editTodo={this.editTodo}
           completeTodo={this.completeTodo}
           deleteTodo={this.deleteTodo}
         />
-        <FormTodo addTodo={this.addTodo} />
+        <FormTodo
+          isEditing={this.state.isEditing}
+          editTodo={this.state.editTodo}
+          addTodo={this.addTodo}
+        />
       </div>
     );
   }
