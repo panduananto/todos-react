@@ -18,6 +18,7 @@ class App extends Component {
     ],
     isEditing: false,
     editTodo: {},
+    todoToShow: "all",
   };
 
   editTodo = (id) => {
@@ -83,12 +84,39 @@ class App extends Component {
     }
   };
 
+  updateToShow = (filter) => {
+    this.setState({
+      todoToShow: filter,
+    });
+  };
+
   render() {
+    let todosFilter = [];
+
+    if (this.state.todoToShow === "all") {
+      todosFilter = this.state.todos;
+    } else if (this.state.todoToShow === "active") {
+      todosFilter = this.state.todos.filter((todo) => {
+        return !todo.complete;
+      });
+    } else if (this.state.todoToShow === "complete") {
+      todosFilter = this.state.todos.filter((todo) => {
+        return todo.complete;
+      });
+    }
+
     return (
       <div className="todo-app container">
         <h1 className="center blue-text">Todo</h1>
+        <div className="button-group-filter center">
+          <button className="blue-grey lighten-4" onClick={() => this.updateToShow("all")}>All</button>
+          <button className="blue-grey lighten-4" onClick={() => this.updateToShow("active")}>Active</button>
+          <button className="blue-grey lighten-4" onClick={() => this.updateToShow("complete")}>
+            Complete
+          </button>
+        </div>
         <Todos
-          todos={this.state.todos}
+          todos={todosFilter}
           editTodo={this.editTodo}
           completeTodo={this.completeTodo}
           deleteTodo={this.deleteTodo}
